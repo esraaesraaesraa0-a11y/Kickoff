@@ -59,4 +59,4 @@ worklog.md
 agent-ctx/
 mini-services/
 db/
-prisma/migrations/
+prisma/migrations/upload/
