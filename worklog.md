@@ -51,3 +51,45 @@ Stage Summary:
 - Dark theme active by default with light mode toggle available
 - Live animations (pulse, ticker) confirmed working
 - Zero lint errors, zero runtime errors
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Upgrade to Real API Data Integration
+
+Work Log:
+- Created API-Football service layer (src/lib/api/football-api.ts) with:
+  - Full TypeScript types for API responses
+  - In-memory caching (30s live, 2min fixtures, 5min standings)
+  - Data transformers (API response → app format)
+  - Endpoints: live fixtures, fixtures by date, fixture details, standings, top scorers
+- Created API route handlers:
+  - /api/fixtures (GET: type=live|today|date, date, league)
+  - /api/standings (GET: league, scorers=true)
+  - /api/fixtures/[id] (GET: fixture detail with events, lineups, statistics)
+- All API routes include automatic fallback to mock data when no API key is configured
+- Created React Query provider and hooks (src/lib/api/hooks.ts):
+  - useFixtures() - live & date-based fixtures
+  - useStandings() - league standings + top scorers
+  - useFixtureDetail() - match details with events/stats/lineups
+  - useNews() - news feed
+- Refactored ALL components to use React Query hooks:
+  - LiveTicker, FeaturedMatches, QuickStandings, NewsFeed
+  - LiveScores, FullStandings, MatchCenter, FullNews
+  - Main page.tsx Match Center fallback
+- Added loading skeletons for all data-dependent components
+- Added data source indicators (shows "Demo data" badge when using mock)
+- Configured .env with API_FOOTBALL_KEY placeholder
+- Tested all API endpoints:
+  - /api/fixtures?type=live → 200, mock data returned
+  - /api/standings?league=epl → 200, 10 standings entries
+  - /api/fixtures/m1 → 200, match details
+- ESLint passes cleanly
+- Server compiles and serves pages correctly
+
+Stage Summary:
+- Platform now supports both real API data and mock data
+- When API_FOOTBALL_KEY is set in .env, all data comes from api-sports.io
+- When no key is set, falls back gracefully to demo data with visual indicators
+- Auto-refresh: live scores every 30s, standings every 5min
+- API key can be obtained for FREE at https://www.api-football.com/
