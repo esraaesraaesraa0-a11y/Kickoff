@@ -1,0 +1,16 @@
+{
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "env": {
+    "API_FOOTBALL_KEY": {
+      "description": "API-Football key from api-sports.io (free). Get yours at https://www.api-football.com/",
+      "value": ""
+    },
+    "API_FOOTALL_BASE_URL": {
+      "description": "API-Football base URL",
+      "value": "https://v3.football.api-sports.io"
+    }
+  }
+}
